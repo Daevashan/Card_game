@@ -3,8 +3,8 @@ import random
 #deck of cards/dealer/player hands
 deck = [2, 3, 4, 5, 6, 7, 8, 9, 10, 2, 3, 4, 5, 6, 7, 8, 9, 10, 2, 3, 4, 5, 6, 7, 8, 9, 10, 2, 3, 4, 5, 6,
         7, 8, 9, 10, "A", "J", "Q", "K", "A", "J", "Q", "K", "A", "J", "Q", "K", "A", "J", "Q", "K"]
-player = ["A", "A", 8, "A"]
-dealer = [10, 10]
+player = []
+dealer = []
 
 
 #deal card
@@ -97,12 +97,10 @@ def dealersTurn():
 
 #game loop
 def gameLoop():
-    gameEnded = False
-
     while True:
-        # for i in range(2):
-            # dealCard(player)
-            # dealCard(dealer)
+        for i in range(2):
+            dealCard(player)
+            dealCard(dealer)
 
         gameEnded = playersTurn()
 
