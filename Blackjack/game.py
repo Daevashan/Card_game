@@ -2,9 +2,9 @@ import random
 
 #deck of cards/dealer/player hands
 deck = [2, 3, 4, 5, 6, 7, 8, 9, 10, 2, 3, 4, 5, 6, 7, 8, 9, 10, 2, 3, 4, 5, 6, 7, 8, 9, 10, 2, 3, 4, 5, 6,
-        7, 8, 9, "A", "J", "Q", "K", "A", "J", "Q", "K", "A", "J", "Q", "K", "A", "J", "Q", "K"]
-player = []
-dealer = []
+        7, 8, 9, 10, "A", "J", "Q", "K", "A", "J", "Q", "K", "A", "J", "Q", "K", "A", "J", "Q", "K"]
+player = ["A", "A", 8, "A"]
+dealer = [10, 10]
 
 
 #deal card
@@ -18,17 +18,21 @@ def dealCard(turn):
 def totalHand(turn):
     total = 0
     faceCard = ["J", "Q", "K"]
+    ace_count = 0
 
     for card in turn:
         if card in range(2, 11):
             total += card
         elif card in faceCard:
             total += 10
-        else:
-            if total > 11:
-                total += 1
-            else:
-                total += 11
+        elif card == "A":
+            ace_count += 1
+            total += 11  # Count each Ace as 11 initially
+
+            # Adjust for Aces if the total exceeds 21
+    while total > 21 and ace_count > 0:
+        total -= 10  # Convert one Ace from 11 to 1
+        ace_count -= 1
     return total
 
 
@@ -45,7 +49,7 @@ def playersTurn():
     while True:
         print(f"Your hand is {player} with total of {totalHand(player)}")
 
-        if totalHand(player) == 21:
+        if (totalHand(player) == 21) and (len(player) == 2):
             print("You got blackjack, you Won!")
             return True
 
@@ -83,6 +87,9 @@ def dealersTurn():
         elif totalHand(dealer) < totalHand(player) < 22:
             print(f"You Won.")
             break
+        elif totalHand(dealer) == totalHand(player) < 22:
+            print(f"You pushed.")
+            break
         else:
             print(f"You lost.")
             break
@@ -93,9 +100,9 @@ def gameLoop():
     gameEnded = False
 
     while True:
-        for i in range(2):
-            dealCard(player)
-            dealCard(dealer)
+        # for i in range(2):
+            # dealCard(player)
+            # dealCard(dealer)
 
         gameEnded = playersTurn()
 
